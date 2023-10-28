@@ -1,0 +1,10 @@
+{
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true,
+    "diffEditor.experimental.useVersion2": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll": true
+    },
+    "cmake.configureOnOpen": false,
+}
