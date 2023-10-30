@@ -50,7 +50,9 @@ class DogsServiceImpl implements DogsService {
 
       final responseData = jsonDecode(response.body);
       if (responseData['status'] == 'success') {
-        return responseData['message'];
+        return List<String>.from(
+          responseData['message'],
+        );
       } else {
         return [];
       }
