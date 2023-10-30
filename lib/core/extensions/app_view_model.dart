@@ -49,6 +49,8 @@ class AppViewModel extends ChangeNotifier {
   Future<void> init() async {
     final connectivityResult = await Connectivity().checkConnectivity();
     connected = connectivityResult != ConnectivityResult.none;
+
+    notifyListeners();
   }
 
   void setLoading(bool loading) {
@@ -103,6 +105,7 @@ class AppViewModel extends ChangeNotifier {
 
   void onConnectivityChanged(ConnectivityResult result) {
     connected = result != ConnectivityResult.none;
+    notifyListeners();
   }
 
   @mustCallSuper

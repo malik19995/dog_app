@@ -1,30 +1,58 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
+import 'package:dog_app/core/database/app_state/app_state_db.dart';
+import 'package:dog_app/core/database/app_state/mock_app_state_db.dart';
+import 'package:dog_app/core/services/dogs/dogs_service.dart';
+import 'package:dog_app/core/services/dogs/dogs_service_mock.dart';
+import 'package:dog_app/ui/home/home.dart';
+import 'package:dog_app/ui/home/widgets/inputs/breed_dropdown.dart';
+import 'package:dog_app/ui/home/widgets/inputs/mode_switcher.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:dog_app/main.dart';
+import 'test_app_widget.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  Future<void> setup(WidgetTester tester) async {
+    final overrides = [
+      appStateDBProvider.overrideWithValue(
+        MockAppStateDB(),
+      ),
+      dogsServiceProvider.overrideWithValue(
+        DogsServiceMock(),
+      ),
+    ];
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: overrides,
+        child: const TestAppWidget(
+          child: Scaffold(
+            body: HomePage(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  testWidgets('End to End Random Test', (WidgetTester tester) async {
+    await setup(tester);
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const DogApp());
+    await tester.pumpAndSettle(
+      const Duration(milliseconds: 200),
+    );
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.byType(ModeSwitcher), findsOneWidget);
+    expect(find.byType(BreedDropdown), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    expect(find.text('Hound Afghan'), findsOneWidget);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.byType(Image), findsOneWidget);
+
+    await tester.tap(find.text("Search"));
+    await tester.pump(
+      const Duration(milliseconds: 300),
+    );
+
+    expect(find.text('Hound Afghan'), findsNothing);
   });
 }

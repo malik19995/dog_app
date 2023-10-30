@@ -25,6 +25,7 @@ class HomeViewModel extends AppViewModel {
     'corgi-cardigan':
         "https://images.dog.ceo/breeds/corgi-cardigan/n02113186_11073.jpg",
   };
+
   @override
   Future<void> init() async {
     fetchBreeds();

@@ -4,6 +4,9 @@ import 'package:dog_app/ui/home/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// This is the Output Widget for the Random Mode of the app.
+// It displays the single random dog returned from the API.
+
 class RandomDogColumn extends ConsumerWidget {
   const RandomDogColumn({super.key});
 

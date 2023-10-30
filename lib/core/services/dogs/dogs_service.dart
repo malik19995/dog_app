@@ -14,14 +14,14 @@ final dogsServiceProvider = Provider<DogsService>(
 );
 
 abstract class DogsService {
-  Future<Map<String, dynamic>> getAllBreeds();
-  Future<Map<String, dynamic>> fetchDogData(String url);
-  Future<List> fetchSubBreeds(String breed);
+  Future<Map<String, List>> getAllBreeds();
+  Future<Map<String, String>> fetchDogData(String url);
+  Future<List<String>> fetchSubBreeds(String breed);
 }
 
 class DogsServiceImpl implements DogsService {
   @override
-  Future<Map<String, dynamic>> getAllBreeds() async {
+  Future<Map<String, List<dynamic>>> getAllBreeds() async {
     try {
       final response = await http.get(
         Uri.parse('https://dog.ceo/api/breeds/list/all'),
@@ -30,18 +30,19 @@ class DogsServiceImpl implements DogsService {
       final responseData = jsonDecode(response.body);
 
       if (responseData['status'] == 'success') {
-        return responseData['message'];
+        return Map<String, List<dynamic>>.from(responseData['message']);
       }
       return {};
     } catch (e) {
       debugPrint(e.toString());
-      Fluttertoast.showToast(msg: 'Something went wrong, please retry.');
+      Fluttertoast.showToast(
+          msg: 'Something went wrong fetching the breeds, please retry.');
       return {};
     }
   }
 
   @override
-  Future<List> fetchSubBreeds(String breed) async {
+  Future<List<String>> fetchSubBreeds(String breed) async {
     try {
       final response = await http.get(
         Uri.parse('https://dog.ceo/api/breed/$breed/list'),
@@ -61,7 +62,7 @@ class DogsServiceImpl implements DogsService {
   }
 
   @override
-  Future<Map<String, dynamic>> fetchDogData(String url) async {
+  Future<Map<String, String>> fetchDogData(String url) async {
     try {
       final response = await http.get(Uri.parse(url));
 
@@ -72,7 +73,7 @@ class DogsServiceImpl implements DogsService {
           final String breedName = responseData['message'].split('/')[4];
           return {breedName: responseData['message']};
         } else {
-          Map<String, dynamic> responseDogData = {};
+          Map<String, String> responseDogData = {};
           int tt = 0;
           for (var dogUrl in responseData['message']) {
             final String breedName = dogUrl.split('/')[4] + ' $tt';
