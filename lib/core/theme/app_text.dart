@@ -2,6 +2,8 @@ import 'package:dog_app/core/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// A custom wrapper on Text Widget.
+
 class AppText extends ConsumerWidget {
   final String text;
   final String variant;

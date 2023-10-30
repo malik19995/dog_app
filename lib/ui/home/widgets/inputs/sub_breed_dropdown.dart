@@ -5,6 +5,8 @@ import 'package:dog_app/ui/home/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// This is the dropdown for selection of sub-breed.
+// It is only enabled when a breed is selected and sub-breeds are available.
 class SubBreedDropdown extends ConsumerWidget {
   const SubBreedDropdown({super.key});
 

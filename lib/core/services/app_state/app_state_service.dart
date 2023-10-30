@@ -20,6 +20,8 @@ abstract class AppStateService {
   StateProvider<String> get routeProvider;
 }
 
+// Base App State Service from Infrastructure.
+// Initialises Local App Cache, Theme etc.
 class AppStateServiceImpl extends AppStateService {
   final Ref _ref;
 

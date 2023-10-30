@@ -11,22 +11,20 @@ class HomeViewModel extends AppViewModel {
   HomeViewModel(Ref ref) : dogService = ref.read(dogsServiceProvider);
 
   final DogsService dogService;
+
   Map allBreeds = {};
-
   List subBreeds = [];
-
   String? selectedBreed;
   String? selectedSubBreed;
+  int selectedMode = 0;
 
+  // Default Data
   Map dogData = {
     'hound-afghan':
         "https://images.dog.ceo/breeds/hound-afghan/n02088094_1003.jpg",
     'corgi-cardigan':
         "https://images.dog.ceo/breeds/corgi-cardigan/n02113186_11073.jpg",
   };
-
-  int selectedMode = 0;
-
   @override
   Future<void> init() async {
     fetchBreeds();
@@ -55,7 +53,7 @@ class HomeViewModel extends AppViewModel {
     notifyListeners();
   }
 
-  search() async {
+  Future<void> search() async {
     String apiUrl;
 
     if (selectedMode == 0) {
@@ -69,7 +67,9 @@ class HomeViewModel extends AppViewModel {
       }
     } else {
       if (selectedBreed == null) {
-        Fluttertoast.showToast(msg: 'Please select a breed first for list');
+        await Fluttertoast.showToast(
+          msg: 'Please select a breed first for list',
+        );
         return;
       } else if (selectedBreed != null && selectedSubBreed == null) {
         apiUrl = 'https://dog.ceo/api/breed/$selectedBreed/images';
@@ -79,11 +79,10 @@ class HomeViewModel extends AppViewModel {
       }
     }
     dogData = await fetchDog(apiUrl);
-
     notifyListeners();
   }
 
-  Future fetchDog(String url) {
+  Future<Map> fetchDog(String url) {
     return dogService.fetchDogData(
       url,
     );

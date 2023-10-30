@@ -5,6 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:layout/layout.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
+// This is a Toggle Mode Switcher.
+// Third-Party UI Widget used: https://pub.dev/packages/toggle_switch
+// This widget is used to switch between the two modes of the app: Random and List.
 class ModeSwitcher extends ConsumerWidget {
   const ModeSwitcher({super.key});
 

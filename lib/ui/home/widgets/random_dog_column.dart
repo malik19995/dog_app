@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dog_app/core/theme/app_text.dart';
 import 'package:dog_app/ui/home/home_view_model.dart';
 import 'package:dog_app/ui/home/utils.dart';
@@ -17,13 +16,12 @@ class RandomDogColumn extends ConsumerWidget {
         Expanded(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(40),
-            child: CachedNetworkImage(
-              errorWidget: (context, url, error) =>
-                  const Center(child: AppText('Image not found')),
-              imageUrl: homeVM.dogData.values.first,
+            child: Image.network(
+              homeVM.dogData.values.first,
+              errorBuilder: (context, error, stackTrace) {
+                return const Center(child: AppText('Image not found'));
+              },
               fit: BoxFit.fitWidth,
-
-              // alignment: Alignment.topCenter,
             ),
           ),
         ),

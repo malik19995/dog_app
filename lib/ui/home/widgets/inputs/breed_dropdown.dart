@@ -5,6 +5,8 @@ import 'package:dog_app/ui/home/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// Breed Dropdown button, Selection of Breed done here.
+// Initiates the Sub Breed API call on selection.
 class BreedDropdown extends ConsumerWidget {
   const BreedDropdown({super.key});
 
@@ -31,7 +33,6 @@ class BreedDropdown extends ConsumerWidget {
         }
       },
       items: homeVM.allBreeds.keys
-          .toSet()
           .map(
             (key) => DropdownMenuItem(
               value: key,

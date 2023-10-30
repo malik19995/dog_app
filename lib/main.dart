@@ -10,19 +10,19 @@ void main() async {
 
   runApp(
     const ProviderScope(
-      child: MyApp(),
+      child: DogApp(),
     ),
   );
 }
 
-class MyApp extends ConsumerStatefulWidget {
-  const MyApp({super.key});
+class DogApp extends ConsumerStatefulWidget {
+  const DogApp({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _MyAppState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _DogAppState();
 }
 
-class _MyAppState extends ConsumerState<MyApp> {
+class _DogAppState extends ConsumerState<DogApp> {
   @override
   void initState() {
     super.initState();
@@ -37,7 +37,6 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     final appState = ref.read(appStateServiceProvider);
-
     final haveInitialisedApp = ref.watch(appState.haveInitialisedAppProvider);
 
     if (!haveInitialisedApp) {
